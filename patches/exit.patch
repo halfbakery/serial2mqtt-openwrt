@@ -1,0 +1,22 @@
+commit de115e539619dd035b5b34be42829943324400a3
+Author: halfbakery <thehalfbakery@gmail.com>
+Date:   Fri May 14 00:27:30 2021 +0200
+
+    the sleep(UINT32_MAX) has exited on OpenWRT instantly
+
+diff --git a/serial2mqtt/main.cpp b/serial2mqtt/main.cpp
+index 40e4d23..5f7bdd7 100644
+--- a/serial2mqtt/main.cpp
++++ b/serial2mqtt/main.cpp
+@@ -92,7 +92,10 @@ int main(int argc, char **argv)
+         SetThreadName(&threads[i], serial2mqtt[i].getSerialPortShort().c_str());
+     }
+ 
+-    sleep(UINT32_MAX); // UINT32_MAX to sleep 'forever'
++    for (;;)
++    {
++	sleep(INT32_MAX);
++    }
+     exit(0);
+ 
+     return 0;
